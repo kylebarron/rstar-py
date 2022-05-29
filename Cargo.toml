@@ -9,4 +9,7 @@ name = "rstar"
 crate-type = ["cdylib"]
 
 [dependencies]
+itertools = "0.10.3"
+numpy = "0.16.2"
 pyo3 = { version = "0.16.4", features = ["extension-module"] }
+rstar = "0.9.3"
