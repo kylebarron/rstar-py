@@ -1,0 +1,28 @@
+name: Test python
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  lint-rust:
+    name: Lint Rust code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+          components: rustfmt, clippy
+
+      - uses: Swatinem/rust-cache@v1
+
+      - name: Rust linting
+        run: |
+          cargo fmt --all -- --check
+          cargo clippy
