@@ -172,4 +172,20 @@ impl RTree {
     pub fn root(&self) -> PyResult<ParentNode> {
         Ok(ParentNode(self.tree.root().clone()))
     }
+
+    /// Returns all elements whose envelope intersects a given envelope.
+    ///
+    /// Any element fully contained within an envelope is also returned by this method. Two
+    /// envelopes that "touch" each other (e.g. by sharing only a common corner) are also
+    /// considered to intersect. Usually, an envelope is an [axis aligned bounding box](crate::AABB).
+    /// This method will return all elements whose AABB has some common area with
+    /// a given AABB.
+    fn locate_in_envelope_intersecting(&self, envelope: &AABB) -> PyResult<Vec<Leaf>> {
+        let out = self
+            .tree
+            .locate_in_envelope_intersecting(&envelope.0)
+            .map(|item| Leaf(item.to_owned()))
+            .collect();
+        Ok(out)
+    }
 }
