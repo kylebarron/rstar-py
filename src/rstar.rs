@@ -1,6 +1,7 @@
 use itertools::izip;
 use numpy::{IntoPyArray, Ix1, PyArray, PyReadonlyArrayDyn};
 use pyo3::prelude::*;
+use pyo3::types::PyType;
 use rstar::primitives::{GeomWithData, Rectangle};
 
 type PointType = [f64; 2];
@@ -24,6 +25,13 @@ impl AABB {
     /// Get the upper right corner of the AABB
     fn ur(&self) -> PyResult<PointType> {
         Ok(self.0.upper())
+    }
+
+    /// Construct an AABB from lower left and upper right corners
+    #[allow(unused_variables)]
+    #[classmethod]
+    fn from_corners(cls: &PyType, ll: PointType, ur: PointType) -> PyResult<Self> {
+        Ok(AABB(AABBType::from_corners(ll, ur)))
     }
 }
 
@@ -103,6 +111,7 @@ impl ParentNode {
         Ok(output)
     }
 
+    /// Get a numpy array of all ids within this node
     fn child_ids<'py>(&self, py: Python<'py>) -> PyResult<&'py PyArray<usize, Ix1>> {
         let all_child_ids: Vec<usize> = get_all_leafs_of_parent(&self.0)
             .into_iter()
@@ -117,6 +126,16 @@ impl ParentNode {
     /// Get envelope of this node
     fn aabb(&self) -> PyResult<AABB> {
         Ok(AABB(self.0.envelope()))
+    }
+
+    /// Get the lower left corner of this node
+    fn ll(&self) -> PyResult<PointType> {
+        Ok(self.0.envelope().lower())
+    }
+
+    /// Get the upper right corner of this node
+    fn ur(&self) -> PyResult<PointType> {
+        Ok(self.0.envelope().upper())
     }
 }
 
