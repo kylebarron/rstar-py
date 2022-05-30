@@ -52,7 +52,9 @@ jobs:
           override: true
 
       - name: Build sdist
-        run: maturin sdist
+        run: |
+          pip install maturin
+          maturin sdist
 
       - uses: actions/upload-artifact@v2
         with:
