@@ -1,4 +1,4 @@
-use crate::rstar::RTree;
+use crate::rstar::{ParentNode, RTree, Leaf, AABB};
 use pyo3::prelude::*;
 mod rstar;
 
@@ -7,6 +7,9 @@ mod rstar;
 /// import the module.
 #[pymodule]
 fn rstar(_py: Python<'_>, m: &PyModule) -> PyResult<()> {
+    m.add_class::<AABB>()?;
+    m.add_class::<Leaf>()?;
+    m.add_class::<ParentNode>()?;
     m.add_class::<RTree>()?;
     Ok(())
 }
