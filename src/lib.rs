@@ -1,4 +1,4 @@
-use crate::rstar::{ParentNode, RTree, Leaf, AABB};
+use crate::rstar::{Leaf, ParentNode, RTree, AABB};
 use pyo3::prelude::*;
 mod rstar;
 

@@ -12,6 +12,7 @@ type Tree2DType = rstar::RTree<TreeItemType>;
 type ParentNodeType = rstar::ParentNode<TreeItemType>;
 type AABBType = rstar::AABB<PointType>;
 
+#[allow(clippy::upper_case_acronyms)]
 #[pyclass]
 pub struct AABB(AABBType);
 
@@ -100,7 +101,7 @@ impl ParentNode {
         let output: Vec<PyObject> = self
             .0
             .children()
-            .into_iter()
+            .iter()
             .map(|child| match child {
                 rstar::RTreeNode::Leaf(leaf) => Leaf(*leaf).into_py(py),
                 rstar::RTreeNode::Parent(parent_node) => {
