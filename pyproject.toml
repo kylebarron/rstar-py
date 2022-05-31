@@ -20,6 +20,10 @@ pandas = ["pyarrow>=4.0.*", "pandas"]
 [tool.isort]
 profile = "black"
 
+[tool.maturin]
+# Note that all pyproject builds are in release mode
+strip = true
+
 # [tool.mypy]
 # disallow_untyped_defs = true
 # warn_unused_ignores = true
