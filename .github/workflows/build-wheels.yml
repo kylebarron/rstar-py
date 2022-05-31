@@ -2,10 +2,9 @@ name: Build Wheels
 
 # Only run on new tags starting with `v`
 on:
-  # push:
-  #   tags:
-  #     - 'v*'
-  pull_request:
+  push:
+    tags:
+      - "v*"
 
 jobs:
   build_wheels:
@@ -69,8 +68,8 @@ jobs:
           name: artifact
           path: dist
 
-      # - uses: pypa/gh-action-pypi-publish@master
-      #   with:
-      #     user: __token__
-      #     password: ${{ secrets.PYPI_PASSWORD }}
-      #     # To test: repository_url: https://test.pypi.org/legacy/
+      - uses: pypa/gh-action-pypi-publish@master
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_PASSWORD }}
+          # To test: repository_url: https://test.pypi.org/legacy/
